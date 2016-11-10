@@ -53,7 +53,7 @@ endfunction
 " and end position.
 " start: [bufnum, lnum, col, off]
 " end: [bufnum, lnum, col, off]
-" pattern: [bufnum, lnum, col, off]
+" pattern: string
 function! s:metaoperate(start, end, pattern) abort
   call setpos('.', a:start)
   let first = v:true
@@ -83,7 +83,12 @@ endfunction
 nnoremap <silent> <Plug>(append-preset-occurence) :<C-u>call <SID>append_preset_occurence() <bar> set hlsearch<CR>
 
 function! s:append_preset_occurence() abort
-  let @/ = @/ . '\V\|\<' . escape(expand('<cword>'), '\') . '\>'
+  let re = '\<' . escape(expand('<cword>'), '\') . '\>'
+  if @/ !=# ""
+    let @/ = @/ . '\V\|' . re
+  else
+    let @/ = re
+  endif
 endfunction
 
 
