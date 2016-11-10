@@ -82,9 +82,13 @@ nnoremap <silent> <Plug>(metarepeat-preset-occurence) :<C-u>call <SID>append_pre
 
 let b:metarepeat_changedtick = 0
 
+function! s:cword() abort
+  return '\<' . escape(expand('<cword>'), '\') . '\>'
+endfunction
+
 function! s:append_preset_occurence() abort
-  let re = '\<' . escape(expand('<cword>'), '\') . '\>'
-  if b:metarepeat_changedtick ==# b:changedtick
+  let re = s:cword()
+  if has_key(b:, 'metarepeat_changedtick') && b:metarepeat_changedtick ==# b:changedtick
     " append
     let @/ = @/ . '\V\|' . re
   else
