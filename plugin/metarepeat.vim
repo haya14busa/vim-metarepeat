@@ -76,18 +76,21 @@ function! s:metaoperate(start, end, pattern) abort
 endfunction
 
 " ---
-" support multiple preset-occurrence like feature by providing append preset
-" occurence mapping. It only supports 'appending' because we cannot reset
-" preset occurence after operation.
+" support multiple preset-occurrence like feature.
 
-nnoremap <silent> <Plug>(append-preset-occurence) :<C-u>call <SID>append_preset_occurence() <bar> set hlsearch<CR>
+nnoremap <silent> <Plug>(metarepeat-preset-occurence) :<C-u>call <SID>append_preset_occurence() <bar> set hlsearch<CR>
+
+let b:metarepeat_changedtick = 0
 
 function! s:append_preset_occurence() abort
   let re = '\<' . escape(expand('<cword>'), '\') . '\>'
-  if @/ !=# ""
+  if b:metarepeat_changedtick ==# b:changedtick
+    " append
     let @/ = @/ . '\V\|' . re
   else
+    " new
     let @/ = re
+    let b:metarepeat_changedtick = b:changedtick
   endif
 endfunction
 
@@ -96,5 +99,5 @@ endfunction
 
 if get(g:, 'meterepeat#default_mapping', 1)
   map g. <Plug>(metarepeat)
-  nmap go <Plug>(append-preset-occurence)
+  nmap go <Plug>(metarepeat-preset-occurence)
 endif
