@@ -98,6 +98,40 @@ function! s:append_preset_occurence() abort
   endif
 endfunction
 
+" ---
+"  occurence modifier
+"  TODO: this implementation doesn't support dot repeat
+
+onoremap <expr> <Plug>(metarepeat-occurence-modifier) <SID>occurence_modifier(v:operator)
+omap o <Plug>(metarepeat-occurence-modifier)
+
+function! s:occurence_modifier(operator) abort
+  let @/ = s:cword()
+  augroup metarepeat-move-once
+    autocmd!
+    autocmd CursorMoved * call s:omod_hook_after_move()
+  augroup END
+  call s:setview()
+  return "iw"
+endfunction
+
+function! s:omod_hook_after_move() abort
+  autocmd! metarepeat-move-once
+  augroup metarepeat-move-once
+    autocmd!
+    autocmd CursorMoved * call s:omod_hook_after_move2()
+  augroup END
+  undojoin
+  call feedkeys('v', 'n')
+endfunction
+
+function! s:omod_hook_after_move2() abort
+  autocmd! metarepeat-move-once
+  execute 'normal!' "\<Esc>"
+  undojoin
+  call s:selected()
+endfunction
+
 
 " ---
 
