@@ -58,7 +58,7 @@ function! s:metaoperate(start, end, pattern) abort
   call setpos('.', a:start)
   let first = v:true
   let endline = a:end[1]
-  le endcol = a:end[2]
+  let endcol = a:end[2]
   let stopline = endline + 1
   while v:true
     let flag = first ? 'c' : ''
