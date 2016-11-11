@@ -80,8 +80,6 @@ endfunction
 
 nnoremap <silent> <Plug>(metarepeat-preset-occurence) :<C-u>call <SID>append_preset_occurence() <bar> set hlsearch<CR>
 
-let b:metarepeat_changedtick = 0
-
 function! s:cword() abort
   return '\V\<' . escape(expand('<cword>'), '\') . '\>'
 endfunction
@@ -97,7 +95,6 @@ function! s:append_preset_occurence() abort
     let b:metarepeat_changedtick = b:changedtick
   endif
 endfunction
-
 
 " ---
 

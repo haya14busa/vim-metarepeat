@@ -4,7 +4,7 @@ vim-metarepeat provides an operator (like) mapping which runs dot repeat for
 every occurence matched by last pattern (@/) in range (specified by motion or
 textobject).
 
-vim-metarepeat is inspired by 'Occurrence modifier, preset-occurrence,
+neovim-metarepeat is inspired by 'Occurrence modifier, preset-occurrence,
 persistence-selection' feature
 http://qiita.com/t9md/items/0bc7eaff726d099943eb#occurrence-modifier-preset-occurrence-persistence-selection
 
