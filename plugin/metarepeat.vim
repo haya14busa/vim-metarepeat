@@ -61,12 +61,15 @@ function! s:metaoperate(start, end, pattern) abort
   let endcol = a:end[2]
   let stopline = endline + 1
   while v:true
-    let flag = first ? 'c' : ''
-    " use /<CR> instead of seachpos() to support {offset}. See :h search-offset
-    execute 'normal!' "/\<CR>"
-    let [_, lnum, col, _] = getpos('.')
+    let flag = (first ? 'c' : '') . 'n'
+    let [lnum, col] = searchpos(a:pattern, flag, stopline)
     if (lnum ==# 0 && col ==# 0) || lnum > endline || (lnum ==# endline && col > endcol)
       break
+    endif
+    let [_, clnum, ccol, _] = getpos('.')
+    if !(first && clnum ==# lnum && ccol ==# col)
+      " move cursor with /<CR> instead of seachpos() to support {offset}. See :h search-offset
+      execute 'normal!' "/\<CR>"
     endif
     normal! .
     let first = v:false
