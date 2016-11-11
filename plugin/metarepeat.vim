@@ -62,7 +62,9 @@ function! s:metaoperate(start, end, pattern) abort
   let stopline = endline + 1
   while v:true
     let flag = first ? 'c' : ''
-    let [lnum, col] = searchpos(a:pattern, flag, stopline)
+    " use /<CR> instead of seachpos() to support {offset}. See :h search-offset
+    execute 'normal!' "/\<CR>"
+    let [_, lnum, col, _] = getpos('.')
     if (lnum ==# 0 && col ==# 0) || lnum > endline || (lnum ==# endline && col > endcol)
       break
     endif
