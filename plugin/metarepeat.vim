@@ -83,7 +83,7 @@ nnoremap <silent> <Plug>(metarepeat-preset-occurence) :<C-u>call <SID>append_pre
 let b:metarepeat_changedtick = 0
 
 function! s:cword() abort
-  return '\<' . escape(expand('<cword>'), '\') . '\>'
+  return '\V\<' . escape(expand('<cword>'), '\') . '\>'
 endfunction
 
 function! s:append_preset_occurence() abort
