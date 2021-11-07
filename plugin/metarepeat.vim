@@ -104,6 +104,7 @@ endfunction
 " ---
 
 if get(g:, 'meterepeat#default_mapping', 1)
-  map g. <Plug>(metarepeat)
+  nmap g. <Plug>(metarepeat)
+  xmap g. <Plug>(metarepeat)
   nmap go <Plug>(metarepeat-preset-occurence)
 endif
